@@ -12,3 +12,5 @@ dependencies:
   - matplotlib=3.6.2
   - pandas=1.5.2
   - wandb=0.13.7
+  - git=2.39.0
+  - jupyterlab=3.5.1
