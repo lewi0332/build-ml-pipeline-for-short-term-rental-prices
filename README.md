@@ -1,6 +1,7 @@
 # Build an ML Pipeline for Short-Term Rental Prices in NYC
 
-Link to this github link per Udacity's recursive instruction loop. 
+Link to this very github link per Udacity's very recursive instruction loop: 
+
 [https://github.com/lewi0332/build-ml-pipeline-for-short-term-rental-prices](https://github.com/lewi0332/build-ml-pipeline-for-short-term-rental-prices)
 
 Link to the Weights and Biases Project tracking the model:
