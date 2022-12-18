@@ -49,22 +49,45 @@ def go(config: DictConfig):
             )
 
         if "basic_cleaning" in active_steps:
-            ##################
-            # Implement here #
-            ##################
-            pass
+            _ = mlflow.run(
+                f"{config['main']['components_repository']}/basic_cleaning",
+                "main",
+                parameters={
+                    "input_artifact": "sample.csv:latest",
+                    "output_artifact": "cleaned.csv",
+                    "output_artifact_type": "cleaned_data",
+                    "output_artifact_description": "Cleaned file"
+                },
+            )
 
         if "data_check" in active_steps:
-            ##################
-            # Implement here #
-            ##################
-            pass
+            _ = mlflow.run(
+                f"{config['main']['components_repository']}/data_check",
+                "main",
+                parameters={
+                    "input_artifact": "cleaned.csv:latest",
+                    "output_artifact": "data_check.json",
+                    "output_artifact_type": "data_check",
+                    "output_artifact_description": "Data check"
+                },
+            )
 
         if "data_split" in active_steps:
-            ##################
-            # Implement here #
-            ##################
-            pass
+            _ = mlflow.run(
+                f"{config['main']['components_repository']}/data_split",
+                "main",
+                parameters={
+                    "input_artifact": "cleaned.csv:latest",
+                    "output_artifact": "train.csv",
+                    "output_artifact_type": "train_data",
+                    "output_artifact_description": "Train data",
+                    "output_artifact_2": "test.csv",
+                    "output_artifact_type_2": "test_data",
+                    "output_artifact_description_2": "Test data",
+                    "test_size": config["modeling"]["test_size"],
+                    "random_state": config["modeling"]["random_state"]
+                },
+            )
 
         if "train_random_forest" in active_steps:
 
@@ -76,20 +99,30 @@ def go(config: DictConfig):
             # NOTE: use the rf_config we just created as the rf_config parameter for the train_random_forest
             # step
 
-            ##################
-            # Implement here #
-            ##################
-
-            pass
+            _ = mlflow.run(
+                f"{config['main']['components_repository']}/train_random_forest",
+                "main",
+                parameters={
+                    "input_artifact": "train.csv:latest",
+                    "output_artifact": "random_forest.pkl",
+                    "output_artifact_type": "random_forest_model",
+                    "output_artifact_description": "Random forest model",
+                    "rf_config": rf_config
+                },
+            )
 
         if "test_regression_model" in active_steps:
-
-            ##################
-            # Implement here #
-            ##################
-
-            pass
-
+            _ = mlflow.run(
+                f"{config['main']['components_repository']}/test_regression_model",
+                "main",
+                parameters={
+                    "input_artifact": "random_forest.pkl:prod",
+                    "input_artifact_2": "test.csv:latest",
+                    "output_artifact": "test_regression_model.json",
+                    "output_artifact_type": "test_regression_model",
+                    "output_artifact_description": "Test regression model"
+                },
+            )
 
 if __name__ == "__main__":
     go()
