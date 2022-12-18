@@ -4,19 +4,29 @@ conda_env: conda.yml
 entry_points:
   main:
     parameters:
-
-      parameter1:
-        description: ## ADD DESCRIPTION
+      input_artifact:
+        description: The name of the artifact to download from wandb. It should be in the format "name:version"
         type: string
 
-       parameter 2:
-        description: ## ADD DESCRIPTION
+      output_artifact:
+        description: The name of the artifact to upload to wandb
         type: string
 
-       parameter3:
-        description: ## ADD DESCRIPTION
+      output_type:
+        description: The type of the artifact to upload to wandb
         type: string
 
+      output_description:
+        description: The description of the artifact to upload to wandb
+        type: string
+
+      min_price:
+        description: The minimum price to consider when removing outliers
+        type: float
+
+      max_price:
+        description: The maximum price to consider when removing outliers
+        type: float
 
     command: >-
-        python run.py  --parameter1 {parameter1}  -- parameter 2 { parameter 2}  -- parameter3 { parameter3} 
+      python run.py  --input_artifact {input_artifact}  --output_artifact {output_artifact}  --output_type {output_type}  --output_description {output_description}  --min_price {min_price}  --max_price {max_price}
